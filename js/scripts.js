@@ -11,10 +11,13 @@ const gridField = document.querySelector('#gameplayTable');
 const scoreField = document.querySelector('#scoringTable');
 const startButton = document.querySelector('#startGame');
 const listCells = document.getElementsByTagName('input');
+const randomSeed = document.querySelector('#seedNumber');
+const countdownTimerArea = document.querySelector('#countdownTimer');
 var tempNumber;
 var tempLetter;
 var pointTable = [[],[],[],[],[]];
-
+var timeup = (Date().getTime())*1000;
+var timer = timeup - Date().getTime();
 
 function chooseLetters(seed) {
 	for (i = 1; i < 6; i += 1) {
@@ -22,6 +25,12 @@ function chooseLetters(seed) {
 		tempLetter = letterPool.splice(tempNumber,1);
 		lettersChosen[i] = tempLetter;
 	}
+}
+
+function randomizeSeedGen() {
+	var seedNumber = Math.floor(Math.random()*1000000);
+	console.log(seedNumber);
+	randomSeed.setAttribute('value',seedNumber);
 }
 
 function chooseCategories(seed) {
@@ -33,7 +42,10 @@ function chooseCategories(seed) {
 }
 
 function generateBoard() {
-	var seed = Math.floor(Math.random()*10000);
+//	var seed = Math.floor(Math.random()*10000);
+    
+	var timeup = 300000;
+	var seed = randomSeed.value;
 	chooseLetters(seed);
 	chooseCategories(seed);
 	startButton.value = "Generated!";
@@ -63,7 +75,7 @@ function generateBoard() {
 }
 
 function scoreBoard() {
-	var counter = 1;
+	var counter = 2;
 	var depthScore = 0;
 	var bredthScore = 0;
 	var totalScore = 0;
